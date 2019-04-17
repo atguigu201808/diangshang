@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+ <!-- configuration:mybatis的全局配置 :配置数据源,连接环境,导入映射文件 -->
+<configuration>
+  <!-- 导入外部的资源文件 -->
+  <properties resource="db.properties"/>
+  
+  <!-- 配置通用mapper插件 -->
+	<plugins>
+	  <plugin interceptor="com.github.abel533.mapperhelper.MapperInterceptor">
+	    <property name="IDENTITY" value="MYSQL"/>
+	    <property name="mappers" value="com.github.abel533.mapper.Mapper"/>
+	  </plugin>
+	</plugins>
+
+  <!-- environments: 配置多个环境 default 默认使用 -->
+  <environments default="development">
+  	<!-- 单个环境 -->
+    <environment id="development">
+      <!-- transactionManager: 使用mysql原生的jdbc来管理事务 -->
+      <transactionManager type="JDBC"/>
+      <!-- dataSource数据源: JNDI ,POOLED, UNPOOLED-->
+      <dataSource type="POOLED">
+        <property name="driver" value="${jdbc.driver}"/>
+        <property name="url" value="${jdbc.url}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+      </dataSource>
+    </environment>
+  </environments>
+  <!-- mappers导入映射文件,可以导入多个 -->
+  <mappers>
+  	<!-- 单个导入 -->
+  <!--  <mapper resource="UserMapper.xml"/> -->
+<!-- 多个导入 -->
+<package name="com.atguigu.mybatis.mapper"/>
+  </mappers>
+</configuration>
